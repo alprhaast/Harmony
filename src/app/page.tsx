@@ -43,12 +43,8 @@ export default async function HomePage() {
           <div className="flex flex-wrap w-full">
             {posts.map((post) => (
               <div key={post.id} className="w-1/4 aspect-video overflow-hidden relative cursor-pointer">
-                {post.name}
-              </div>
-            ))}
-            {mockImages.map((image) => (
-              <div key={image.id} className="w-1/4 aspect-video overflow-hidden relative cursor-pointer">
-                <img src={image.url} alt="Image Title" className="w-full objectCover transition-transform duration-300 hover:scale-110" />
+                <span className="absolute">{post.name}</span>
+                <img src={post.url} alt="Image Title" className="w-full objectCover transition-transform duration-300 hover:scale-110" />
               </div>
             ))}
           </div>
