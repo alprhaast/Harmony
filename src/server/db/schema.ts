@@ -19,7 +19,7 @@ import {
 export const createTable = pgTableCreator((name) => `harmony_${name}`);
 
 export const posts = createTable(
-  "image",
+  "post",
   {
     id: integer("id").primaryKey().generatedByDefaultAsIdentity(),
     name: varchar("name", { length: 256 }).notNull(),

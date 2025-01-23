@@ -21,7 +21,9 @@ const mockImages = mockUrls.map((url, index) => ({
 
 
 export default async function HomePage() {
-  const posts = await db.query.posts.findMany();
+  const images = await db.query.images.findMany({
+    orderBy: (model, { desc }) => (model.id),
+  });
 
   return (
     <div className="wrapper min-h-screen">
@@ -41,10 +43,10 @@ export default async function HomePage() {
             Gallery
           </h1>
           <div className="flex flex-wrap w-full">
-            {posts.map((post) => (
-              <div key={post.id} className="w-1/4 aspect-video overflow-hidden relative cursor-pointer">
-                <span className="absolute">{post.name}</span>
-                <img src={post.url} alt="Image Title" className="w-full objectCover transition-transform duration-300 hover:scale-110" />
+            {images.map((image) => (
+              <div key={image.id} className="w-1/4 aspect-video overflow-hidden relative cursor-pointer">
+                <span className="absolute">{image.name}</span>
+                <img src={image.url} alt="Image Title" className="w-full objectCover transition-transform duration-300 hover:scale-110" />
               </div>
             ))}
           </div>
