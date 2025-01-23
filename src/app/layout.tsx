@@ -2,7 +2,8 @@ import { type Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
 import { GeistSans } from "geist/font/sans";
 import { TopNav } from "./_components/topnav";
-
+  
+import "@uploadthing/react/styles.css";
 import "~/styles/globals.css";
 
 export const metadata: Metadata = {
