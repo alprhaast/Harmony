@@ -1,27 +1,10 @@
 import Link from "next/link";
-import {db} from "~/server/db/";
+import { db } from "~/server/db/";
 
 export const dynamic = "force-dynamic";
 
-const mockUrls = [
-  "https://trdmr1oftw.ufs.sh/f/Y7S16EekHIaUpzGL9qcKFjr5HwYt1cQ6EBbam0qXA3yz8IkN",
-  "https://trdmr1oftw.ufs.sh/f/Y7S16EekHIaUP4X2HxbQj7f1eAl6nNk82T5gSpRtchdrobwW",
-  "https://trdmr1oftw.ufs.sh/f/Y7S16EekHIaUvDecnmSJ65y23WIF1SrTiHVQswBmUgZqkChA",
-  "https://trdmr1oftw.ufs.sh/f/Y7S16EekHIaULqsR6GDvoNJBpmx7Mhd5ziDbC1lEAW8XIGq3",
-  "https://trdmr1oftw.ufs.sh/f/Y7S16EekHIaU6lPCUYGlGh7D3i01eISTAdOzfLrW5jXpywKm",
-  "https://trdmr1oftw.ufs.sh/f/Y7S16EekHIaUr72gbItW8dhwsq16aHgLJyUFtvXQKMuf7PRT",
-  "https://trdmr1oftw.ufs.sh/f/Y7S16EekHIaUcT9EMpINM7U5Z3PdBwtHKJbYiV0QkhaomTCI",
-  "https://trdmr1oftw.ufs.sh/f/Y7S16EekHIaURC2Rx8YTPNGwsXhQFvylnmfgUSiE0xKbZCkp"
-];
-
-const mockImages = mockUrls.map((url, index) => ({
-  id: index + 1,
-  url
-}));
-
-
 export default async function HomePage() {
-  const images = await db.query.images.findMany({
+  const images = await db.query.posts.findMany({
     orderBy: (model, { desc }) => (model.id),
   });
 
