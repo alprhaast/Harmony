@@ -21,7 +21,7 @@ const mockImages = mockUrls.map((url, index) => ({
 
 export default async function HomePage() {
   const posts = await db.query.posts.findMany();
-  console.log(posts);
+
   return (
     <div className="wrapper min-h-screen">
       <header className="bg-white shadow">
@@ -47,7 +47,7 @@ export default async function HomePage() {
             ))}
             {mockImages.map((image) => (
               <div key={image.id} className="w-1/4 aspect-video overflow-hidden relative cursor-pointer">
-                <Image src={image.url} alt="Image Title" layout="fill" objectFit="cover" className="transition-transform duration-300 hover:scale-110" unoptimized />
+                <img src={image.url} alt="Image Title" className="w-full objectCover transition-transform duration-300 hover:scale-110" />
               </div>
             ))}
           </div>
