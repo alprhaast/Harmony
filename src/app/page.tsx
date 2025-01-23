@@ -1,4 +1,6 @@
 import Link from "next/link";
+import Image from "next/image";
+import {db} from "~/server/db/";
 
 const mockUrls = [
   "https://trdmr1oftw.ufs.sh/f/Y7S16EekHIaUpzGL9qcKFjr5HwYt1cQ6EBbam0qXA3yz8IkN",
@@ -17,21 +19,40 @@ const mockImages = mockUrls.map((url, index) => ({
 }));
 
 
-export default function HomePage() {
+export default async function HomePage() {
+  const posts = await db.query.posts.findMany();
+  console.log(posts);
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
-      <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16">
-        <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
-          Harmony Gallery
-        </h1>
-        <div className="flex flex-wrap">
-          {mockImages.map((image) => (
-            <div key={image.id} className="w-1/4">
-              <img src={image.url} className="w-full h-full object-cover" />
-            </div>
-          ))}
+    <div className="wrapper min-h-screen">
+      <header className="bg-white shadow">
+        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+          <Link href="/" className="font-extrabold tracking-tight sm:text-[2rem]">
+            T3 Harmony
+          </Link>
+          <Link href="/login" className="bg-black text-white px-6 py-2 rounded">
+            Login
+          </Link>
         </div>
-      </div>
-    </main>
+      </header>
+      <main className="flex flex-col items-center justify-center">
+        <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16">
+          <h1 className="text-5xl font-extrabold tracking-tight sm:text-[4rem]">
+            Gallery
+          </h1>
+          <div className="flex flex-wrap w-full">
+            {posts.map((post) => (
+              <div key={post.id} className="w-1/4 aspect-video overflow-hidden relative cursor-pointer">
+                {post.name}
+              </div>
+            ))}
+            {mockImages.map((image) => (
+              <div key={image.id} className="w-1/4 aspect-video overflow-hidden relative cursor-pointer">
+                <Image src={image.url} alt="Image Title" layout="fill" objectFit="cover" className="transition-transform duration-300 hover:scale-110" unoptimized />
+              </div>
+            ))}
+          </div>
+        </div>
+      </main>
+    </div>
   );
 }
