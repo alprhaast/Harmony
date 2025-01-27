@@ -1,6 +1,7 @@
 import { SignedIn, SignedOut } from "@clerk/nextjs";
 import { CustomUploadButton } from "./_components/uploadbtn";
 import { getMyImages } from "~/server/queries";
+import Image from "next/image";
 
 export const dynamic = "force-dynamic";
 
@@ -10,9 +11,15 @@ async function Images() {
   return (
     <div className="flex flex-wrap w-full">
       {images.map((image) => (
-        <div key={image.id} className="w-1/4 aspect-video overflow-hidden relative cursor-pointer">
+        <div key={image.id} className="flex w-1/4 aspect-video overflow-hidden relative cursor-pointer">
           <span className="absolute w-full h-full bg-gradient-to-b from-blue-100 to-transparent py-3 text-center font-bold uppercase">{image.name}</span>
-          <img src={image.url} alt="Image Title" className="w-full object-cover object-center" />
+          <Image 
+            src={image.url} 
+            alt={image.name}
+            style={{ objectFit: "cover" }}
+            width={400}
+            height={400}
+          />
         </div>
       ))}
     </div>
