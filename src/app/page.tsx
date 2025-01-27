@@ -1,5 +1,6 @@
 import { SignedIn, SignedOut } from "@clerk/nextjs";
 import { db } from "~/server/db/";
+import { CustomUploadButton } from "./_components/uploadbtn";
 
 export const dynamic = "force-dynamic";
 
@@ -31,6 +32,7 @@ export default async function HomePage() {
           <h1 className="text-5xl font-extrabold tracking-tight sm:text-[4rem]">
             Gallery
           </h1>
+          <CustomUploadButton />
           <Images />
         </SignedIn>
       </div>

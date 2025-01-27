@@ -1,4 +1,3 @@
-import { UploadButton } from "~/utils/uploadthing";
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 
 export function TopNav() {
@@ -11,7 +10,6 @@ export function TopNav() {
                 <SignInButton />
             </SignedOut>
             <SignedIn>
-                {/* <UploadButton endpoint="imageUploader" /> */}
                 <UserButton />
             </SignedIn>
         </div>

@@ -1,29 +1,29 @@
-import { auth } from "@clerk/nextjs/server";
-import { createUploadthing, type FileRouter } from "uploadthing/next";
+import { getAuth } from "@clerk/nextjs/server";
+import { createUploadthing, type FileRouter } from "uploadthing/next-legacy";
 import { UploadThingError } from "uploadthing/server";
+import { db } from "~/server/db";
+import { images } from "~/server/db/schema";
 
 const f = createUploadthing();
 
 export const ourFileRouter = {
   imageUploader: f({
-    image: {
-      maxFileSize: "4MB",
-      maxFileCount: 1,
-    },
+    image: { maxFileSize: "4MB", maxFileCount: 40 },
   })
     .middleware(async ({ req }) => {
-      const user = auth();
-      console.log("Auth check:", user);
+      const user = getAuth(req);
+      const userId = user.userId;
 
-      if (!user.userId) throw new UploadThingError("Unauthorized");
+      if (!userId) throw new UploadThingError("Unauthorized");
 
-      return { userId: user.userId };
+      return { userId };
     })
     .onUploadComplete(async ({ metadata, file }) => {
-      console.log("Upload complete for userId:", metadata.userId);
-
-      console.log("file url", file.url);
-      console.log("File router", { metadata, file });
+      await db.insert(images).values({
+        name: file.name,
+        url: file.url,
+        userId: metadata.userId,
+      });
       return { uploadedBy: metadata.userId };
     }),
 } satisfies FileRouter;
