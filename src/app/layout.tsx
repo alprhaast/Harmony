@@ -1,15 +1,14 @@
 import { type Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
 import { GeistSans } from "geist/font/sans";
-import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
-import { extractRouterConfig } from "uploadthing/server";
 
-import { TopNav } from "./_components/topnav";
+import { Header } from "./_components/header";
+import { extractRouterConfig } from "uploadthing/server";
 import { ourFileRouter } from "~/app/api/uploadthing/core";
+import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
   
 import "@uploadthing/react/styles.css";
 import "~/styles/globals.css";
-
 
 export const metadata: Metadata = {
   title: "T3 Harmony",
@@ -27,7 +26,7 @@ export default function RootLayout({
       />
       <html lang="en" className={`${GeistSans.variable}`}>
         <body>
-          <TopNav />
+          <Header />
           {children}
         </body>
       </html>

@@ -1,6 +1,6 @@
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 
-export function TopNav() {
+export function Header() {
   return (
     <nav className="bg-white shadow">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">

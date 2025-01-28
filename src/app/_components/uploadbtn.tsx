@@ -9,7 +9,6 @@ export function CustomUploadButton() {
              <UploadButton
                 endpoint="imageUploader"
                 onClientUploadComplete={(res) => {
-                    console.log("Files: ", res);
                     router.refresh();
                 }}
                 onUploadError={(error: Error) => {

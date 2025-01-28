@@ -20,7 +20,7 @@
     "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,mdx}\" --cache"
   },
   "dependencies": {
-    "@clerk/nextjs": "5.0.0-beta.46",
+    "@clerk/nextjs": "^6.10.3",
     "@t3-oss/env-nextjs": "^0.10.1",
     "@uploadthing/react": "^7.1.5",
     "drizzle-orm": "^0.33.0",
@@ -39,7 +39,7 @@
     "@types/react-dom": "^18.3.0",
     "@typescript-eslint/eslint-plugin": "^8.1.0",
     "@typescript-eslint/parser": "^8.1.0",
-    "drizzle-kit": "^0.24.2",
+    "drizzle-kit": "^0.24.0",
     "eslint": "^8.57.0",
     "eslint-config-next": "^15.0.1",
     "eslint-plugin-drizzle": "^0.2.3",
