@@ -11,9 +11,6 @@ export function CustomUploadButton() {
                 onClientUploadComplete={(res) => {
                     router.refresh();
                 }}
-                onUploadError={(error: Error) => {
-                    alert(`ERROR: ${error.message}`);
-                }}
             />
         </div>
     )

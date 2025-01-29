@@ -1,8 +1,9 @@
+import Link from "next/link";
 import Image from "next/image";
 import { SignedIn, SignedOut } from "@clerk/nextjs";
 
 import { CustomUploadButton } from "./_components/uploadbtn";
-import { getMyImages, getCurrentUserRole } from "~/server/queries";
+import { getMyImages, getCurrentUserRole, deleteImage } from "~/server/queries";
 
 export const dynamic = "force-dynamic";
 
@@ -11,31 +12,33 @@ async function Images() {
   const role = await getCurrentUserRole();
 
   return (
-    <div className="flex flex-wrap w-full">
+    <div className="flex flex-wrap w-full justify-center sm:justify-start">
       {images.map((image) => (
-        <div key={image.id} className="flex w-1/4 aspect-video overflow-hidden relative cursor-pointer">
-          <span className="absolute w-full h-full bg-yellow-500 bg-opacity-50 py-3 text-center font-bold uppercase">{image.name}</span>
-          <Image 
-            src={image.url} 
-            alt={image.name}
-            style={{ objectFit: "cover" }}
-            width={400}
-            height={400}
-            priority={true}
-          />
+        <div key={image.id} className="flex w-4/4 sm:w-2/4 lg:w-1/3 xl:w-1/4 aspect-video overflow-hidden relative cursor-pointer">
+          <Link href={`/image/${image.id}`} prefetch={false}>
+            <Image 
+              src={image.url} 
+              alt={image.name}
+              data-id={image.id}
+              data-user={image.userId}
+              style={{ objectFit: "cover" }}
+              width={400}
+              height={400}
+              priority={true}
+            />
+            <h4 className="absolute bottom-0 left-0 bg-gray-800 text-white p-2 w-full h-[35px] pr-[75px]">{image.name}</h4>
+          </Link>
           {role === 'admin' ? (
-            <button className="absolute bottom-2 right-2">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className="w-6 h-6">
-                <path d="M362.7 19.3L314.3 67.7 444.3 197.7l48.4-48.4c25-25 25-65.5 0-90.5L453.3 19.3c-25-25-65.5-25-90.5 0zm-71 71L58.6 323.5c-10.4 10.4-18 23.3-22.2 37.4L1 481.2C-1.5 489.7 .8 498.8 7 505s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L421.7 220.3 291.7 90.3z" />
+            <form action={async () => {
+              "use server";
+              await deleteImage(image.id);
+            }}>
+              <button className="absolute bottom-0 right-0 w-[35px] h-[35px] bg-red-500 text-white hover:bg-red-700 transition duration-300 flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" className="w-4 h-4">
+                  <path fill="currentColor" d="M135.2 17.7L128 32 32 32C14.3 32 0 46.3 0 64S14.3 96 32 96l384 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-96 0-7.2-14.3C307.4 6.8 296.3 0 284.2 0L163.8 0c-12.1 0-23.2 6.8-28.6 17.7zM416 128L32 128 53.2 467c1.6 25.3 22.6 45 47.9 45l245.8 0c25.3 0 46.3-19.7 47.9-45L416 128z" />
               </svg>
-            </button>
-          ) : null}
-          {role === 'admin' ? (
-            <button className="absolute bottom-2 left-2">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" className="w-6 h-6">
-                <path d="M135.2 17.7L128 32 32 32C14.3 32 0 46.3 0 64S14.3 96 32 96l384 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-96 0-7.2-14.3C307.4 6.8 296.3 0 284.2 0L163.8 0c-12.1 0-23.2 6.8-28.6 17.7zM416 128L32 128 53.2 467c1.6 25.3 22.6 45 47.9 45l245.8 0c25.3 0 46.3-19.7 47.9-45L416 128z" />
-              </svg>
-            </button>
+              </button>
+            </form>
           ) : null}
         </div>
       ))}
